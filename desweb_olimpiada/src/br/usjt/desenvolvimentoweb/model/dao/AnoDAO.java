@@ -5,18 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import RODRIGO.ConnectionFactory;
 import br.usjt.desenvolvimentoweb.model.entity.Ano;
 
 public class AnoDAO {
 	
-	ConnectionFactory conexao = new ConnectionFactory();
+	ConnectionFactory connectionfactory = new ConnectionFactory();
 			
 
 			public int criar(Ano ano) {
 				String sqlInsert = "INSERT INTO ano(id, tipo) VALUES (?)";
 				// usando o try with resources do Java 7, que fecha o que abriu
-				try (Connection conn = conexao.obtemConexao();
+				try (Connection conn = ConnectionFactory.obtemConexao();
 						PreparedStatement stm = conn.prepareStatement(sqlInsert);) {
 					stm.setString(1, ano.getTipo());
 					stm.execute();
@@ -38,7 +37,7 @@ public class AnoDAO {
 			public void atualizar(Ano ano) {
 				String sqlUpdate = "UPDATE ano SET tipo=? WHERE id=?";
 				// usando o try with resources do Java 7, que fecha o que abriu
-				try (Connection conn = conexao.obtemConexao();
+				try (Connection conn = ConnectionFactory.obtemConexao();
 						PreparedStatement stm = conn.prepareStatement(sqlUpdate);) {
 					stm.setString(1, ano.getTipo());
 					stm.setInt(2, ano.getId());
@@ -51,7 +50,7 @@ public class AnoDAO {
 			public void excluir(Ano ano) {
 				String sqlDelete = "DELETE FROM ano WHERE id = ?";
 				// usando o try with resources do Java 7, que fecha o que abriu
-				try (Connection conn = conexao.obtemConexao();
+				try (Connection conn = ConnectionFactory.obtemConexao();
 						PreparedStatement stm = conn.prepareStatement(sqlDelete);) {
 					stm.setInt(1, ano.getId());
 					stm.execute();

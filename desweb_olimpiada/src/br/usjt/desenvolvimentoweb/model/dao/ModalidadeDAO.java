@@ -1,7 +1,6 @@
 package br.usjt.desenvolvimentoweb.model.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,12 +9,12 @@ import br.usjt.desenvolvimentoweb.model.entity.Modalidade;
 
 public class ModalidadeDAO {
 	
-	ConnectionFactory conexao = new ConnectionFactory();
+	ConnectionFactory connectionfactory = new ConnectionFactory();
 
 			public int criar(Modalidade modalidade) {
 				String sqlInsert = "INSERT INTO modalidade(id, nome, tipo) VALUES (?, ?)";
 				// usando o try with resources do Java 7, que fecha o que abriu
-				try (Connection conn = conexao.obtemConexao();
+				try (Connection conn = ConnectionFactory.obtemConexao();
 						PreparedStatement stm = conn.prepareStatement(sqlInsert);) {
 					stm.setString(1, modalidade.getNome());
 					stm.setString(2, modalidade.getTipo());
@@ -39,7 +38,7 @@ public class ModalidadeDAO {
 			public void atualizar(Modalidade modalidade) {
 				String sqlUpdate = "UPDATE modalidade SET nome=?, tipo=?,  WHERE id=?";
 				// usando o try with resources do Java 7, que fecha o que abriu
-				try (Connection conn = conexao.obtemConexao();
+				try (Connection conn = ConnectionFactory.obtemConexao();
 						PreparedStatement stm = conn.prepareStatement(sqlUpdate);) {
 					stm.setString(1, modalidade.getNome());
 					stm.setString(2, modalidade.getTipo());
@@ -53,7 +52,7 @@ public class ModalidadeDAO {
 			public void excluir(Modalidade modalidade) {
 				String sqlDelete = "DELETE FROM modalidade WHERE id = ?";
 				// usando o try with resources do Java 7, que fecha o que abriu
-				try (Connection conn = conexao.obtemConexao();
+				try (Connection conn = ConnectionFactory.obtemConexao();
 						PreparedStatement stm = conn.prepareStatement(sqlDelete);) {
 					stm.setInt(1, modalidade.getId());
 					stm.execute();
@@ -66,7 +65,7 @@ public class ModalidadeDAO {
 				Modalidade modalidade = new Modalidade();
 				String sqlSelect = "SELECT nome, tipo, id FROM modalidade WHERE modalidade.id = ?";
 				// usando o try with resources do Java 7, que fecha o que abriu
-				try (Connection conn = conexao.obtemConexao();
+				try (Connection conn = ConnectionFactory.obtemConexao();
 						PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 					stm.setInt(1, modalidade.getId());
 					try (ResultSet rs = stm.executeQuery();) {

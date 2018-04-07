@@ -2,16 +2,36 @@ package br.usjt.desenvolvimentoweb.model.entity;
 
 public class Olimpiada {
 	
+	private int id;
 	private int ouro;
 	private int prata;
 	private int bronze;
 	
 	
-	public Olimpiada(int ouro, int prata, int bronze) {
+	
+	
+	public Olimpiada() {
+		
+	}
+
+
+	public Olimpiada(int id, int ouro, int prata, int bronze) {
 		super();
+		this.id =id;
 		this.ouro = ouro;
 		this.prata = prata;
 		this.bronze = bronze;
+	}
+
+	
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 
@@ -47,8 +67,11 @@ public class Olimpiada {
 
 	@Override
 	public String toString() {
-		return "Olimpiada [ouro=" + ouro + ", prata=" + prata + ", bronze=" + bronze + "]";
+		return "Olimpiada [id=" + id + ", ouro=" + ouro + ", prata=" + prata + ", bronze=" + bronze + "]";
 	}
+
+
+	
 	
 	
 	

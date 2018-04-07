@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import br.usjt.desenvolvimentoweb.model.entity.Pais;
 
 public class PaisDAO {
+	ConnectionFactory connectionfactory = new ConnectionFactory();
 	
-	ConnectionFactory conexao = new ConnectionFactory();
 
 			public int criar(Pais pais) {
 				String sqlInsert = "INSERT INTO pais(id, nome, populacao, area) VALUES (?, ?, ?)";
 				// usando o try with resources do Java 7, que fecha o que abriu
-				try (Connection conn = conexao.obtemConexao();
+				try (Connection conn = ConnectionFactory.obtemConexao();
 						PreparedStatement stm = conn.prepareStatement(sqlInsert);) {
 					stm.setString(1, pais.getNome());
 					stm.setLong(2, pais.getPopulacao());
@@ -38,7 +38,7 @@ public class PaisDAO {
 			public void atualizar(Pais pais) {
 				String sqlUpdate = "UPDATE pais SET nome=?, populacao=?, area=? WHERE id=?";
 				// usando o try with resources do Java 7, que fecha o que abriu
-				try (Connection conn = conexao.obtemConexao();
+				try (Connection conn = ConnectionFactory.obtemConexao();
 						PreparedStatement stm = conn.prepareStatement(sqlUpdate);) {
 					stm.setString(1, pais.getNome());
 					stm.setLong(2, pais.getPopulacao());
@@ -53,7 +53,7 @@ public class PaisDAO {
 			public void excluir(Pais pais) {
 				String sqlDelete = "DELETE FROM pais WHERE id = ?";
 				// usando o try with resources do Java 7, que fecha o que abriu
-				try (Connection conn = conexao.obtemConexao();
+				try (Connection conn = ConnectionFactory.obtemConexao();
 						PreparedStatement stm = conn.prepareStatement(sqlDelete);) {
 					stm.setInt(1, pais.getId());
 					stm.execute();
@@ -66,7 +66,7 @@ public class PaisDAO {
 				Pais pais = new Pais();
 				String sqlSelect = "SELECT nome, populacao, area, id FROM pais WHERE pais.id = ?";
 				// usando o try with resources do Java 7, que fecha o que abriu
-				try (Connection conn = conexao.obtemConexao();
+				try (Connection conn = ConnectionFactory.obtemConexao();
 						PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 					stm.setInt(1, pais.getId());
 					try (ResultSet rs = stm.executeQuery();) {
